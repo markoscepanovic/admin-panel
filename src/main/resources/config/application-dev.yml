@@ -22,7 +22,7 @@ spring:
         driver-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
         url: jdbc:mysql://213.136.87.169:3306/crmtest?useUnicode=true&characterEncoding=utf8
         name:
-        username: crmTest
+        username: crmtest
         password: password.1
     jpa:
         database-platform: org.hibernate.dialect.MySQLInnoDBDialect
