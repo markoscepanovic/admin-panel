@@ -1,0 +1,24 @@
+{
+  "generator-jhipster": {
+    "baseName": "AdminPanel",
+    "packageName": "com.logate.adminpanel",
+    "packageFolder": "com/logate/adminpanel",
+    "authenticationType": "oauth2",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "elasticsearch",
+    "useSass": true,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "enableTranslation": true,
+    "enableSocialSignIn": false,
+    "rememberMeKey": "969631105c9691a2de041f8f2ed747fa6e1b6a0f",
+    "testFrameworks": [
+      "gatling"
+    ]
+  }
+}
