@@ -1,24 +1,27 @@
 <div>
-    <h2 translate="adminPanelApp.userProfile.home.title">UserProfiles</h2>
     <jh-alert></jh-alert>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-primary" ui-sref="userProfile.new">
-                    <span class="glyphicon glyphicon-flash"></span> <span
-                    translate="adminPanelApp.userProfile.home.createLabel">Create a new UserProfile</span>
-                </button>
-            </div>
-            <div class="col-md-8">
-                <form name="searchForm" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery"
-                               placeholder="query">
+    <div class="">
+
+        <div class="row">  
+            <div class="col-sm-7">   <h2 translate="adminPanelApp.userProfile.home.title">Departments</h2>  </div>
+             
+            <div class="col-sm-5 text-right">  
+                <form name="searchForm" class="form-inline">  
+                    <div class="form-group p-r">   <input type="text" id="searchQuery"   class="form-control"
+                                                          ng-model="searchQuery"  
+                                                          placeholder="{{'search' | translate}}">  
                     </div>
-                    <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span>
-                        <span>Search a UserProfile</span>
+                     
+                    <button class="btn btn-info btn-sm" ng-click="search()">  
+                        <i class="glyphicon glyphicon-search"></i>  
                     </button>
+                     
+                    <button class="btn btn-primary btn-sm" ui-sref="userProfile.new">   <span
+                        class="glyphicon glyphicon-plus"></span>  
+                    </button>
+                     
                 </form>
+                 
             </div>
         </div>
     </div>
@@ -27,39 +30,50 @@
         <table class="table table-striped">
             <thead>
             <tr jh-sort="predicate" ascending="reverse" callback="reset()">
-                <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span
+                <th>FullName</span> <span
                     class="glyphicon glyphicon-sort"></span></th>
-                <th jh-sort-by="fullName"><span translate="adminPanelApp.userProfile.fullName">FullName</span> <span
+                <th>Roles</span> <span
                     class="glyphicon glyphicon-sort"></span></th>
-                <th jh-sort-by="user.login"><span translate="adminPanelApp.userProfile.user">user</span> <span
+                <th>User</span> <span
                     class="glyphicon glyphicon-sort"></span></th>
-                <th></th>
+                <th>Work Groups</span> <span
+                    class="glyphicon glyphicon-sort"></span></th>
+                <th width="130px"></th>
             </tr>
             </thead>
-            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
-            <tr ng-repeat="userProfile in userProfiles track by userProfile.id">
-                <td><a ui-sref="userProfile.detail({id:userProfile.id})">{{userProfile.id}}</a></td>
+            <tbody>
+            <tr ng-repeat="userProfile in userProfiles">
                 <td>{{userProfile.fullName}}</td>
+                <td>
+                   <span ng-repeat="role in userProfile.roles">
+                       <a class="form-control-static" ui-sref="role.detail({id: {{role.id}}})">{{role.name}}</a>{{$last ? '' : ', '}}
+                    </span>
+                </td>
                 <td>
                     {{userProfile.user.login}}
                 </td>
                 <td>
+                   <span ng-repeat="workGroup in userProfile.workGroups">
+                        <a class="form-control-static" ui-sref="workGroup.detail({id: {{workGroup.id}}})">{{workGroup.name}}</a>{{$last ? '' : ', '}}
+                    </span>
+                </td>
+
+
+                <td class="text-right">
                     <button type="submit"
                             ui-sref="userProfile.detail({id:userProfile.id})"
                             class="btn btn-info btn-sm">
-                        <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        <span class="glyphicon glyphicon-eye-open"></span>
                     </button>
                     <button type="submit"
                             ui-sref="userProfile.edit({id:userProfile.id})"
                             class="btn btn-primary btn-sm">
-                        <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span
-                        translate="entity.action.edit"> Edit</span>
+                        <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="submit"
                             ui-sref="userProfile.delete({id:userProfile.id})"
                             class="btn btn-danger btn-sm">
-                        <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span
-                        translate="entity.action.delete"> Delete</span>
+                        <span class="glyphicon glyphicon-remove-circle"></span>
                     </button>
                 </td>
             </tr>

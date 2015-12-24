@@ -1,24 +1,26 @@
 <div>
-    <h2 translate="adminPanelApp.role.home.title">Roles</h2>
-    <jh-alert></jh-alert>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-primary" ui-sref="role.new">
-                    <span class="glyphicon glyphicon-flash"></span> <span
-                    translate="adminPanelApp.role.home.createLabel">Create a new Role</span>
-                </button>
-            </div>
-            <div class="col-md-8">
-                <form name="searchForm" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery"
-                               placeholder="query">
+    <div class="">
+
+        <div class="row">  
+            <div class="col-sm-7">   <h2 translate="adminPanelApp.role.home.title">Departments</h2>  </div>
+             
+            <div class="col-sm-5 text-right">  
+                <form name="searchForm" class="form-inline">  
+                    <div class="form-group p-r">   <input type="text" id="searchQuery"   class="form-control"
+                                                          ng-model="searchQuery"  
+                                                          placeholder="{{'search' | translate}}">  
                     </div>
-                    <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span>
-                        <span>Search a Role</span>
+                     
+                    <button class="btn btn-info btn-sm" ng-click="search()">  
+                        <i class="glyphicon glyphicon-search"></i>  
                     </button>
+                     
+                    <button class="btn btn-primary btn-sm" ui-sref="role.new">   <span
+                        class="glyphicon glyphicon-plus"></span>  
+                    </button>
+                     
                 </form>
+                 
             </div>
         </div>
     </div>
@@ -27,34 +29,30 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><span translate="global.field.id">ID</span></th>
                 <th><span translate="adminPanelApp.role.name">Name</span></th>
                 <th><span translate="adminPanelApp.role.description">Description</span></th>
-                <th></th>
+                <th width="130px"></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="role in roles track by role.id">
-                <td><a ui-sref="role.detail({id:role.id})">{{role.id}}</a></td>
                 <td>{{role.name}}</td>
                 <td>{{role.description}}</td>
-                <td>
+                <td class="text-right">
                     <button type="submit"
                             ui-sref="role.detail({id:role.id})"
                             class="btn btn-info btn-sm">
-                        <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        <span class="glyphicon glyphicon-eye-open"></span>
                     </button>
                     <button type="submit"
                             ui-sref="role.edit({id:role.id})"
                             class="btn btn-primary btn-sm">
-                        <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span
-                        translate="entity.action.edit"> Edit</span>
+                        <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <button type="submit"
                             ui-sref="role.delete({id:role.id})"
                             class="btn btn-danger btn-sm">
-                        <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span
-                        translate="entity.action.delete"> Delete</span>
+                        <span class="glyphicon glyphicon-remove-circle"></span>
                     </button>
                 </td>
             </tr>
