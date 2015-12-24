@@ -41,8 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class UserProfileResourceIntTest {
 
-    private static final String DEFAULT_FULL_NAME = "AAAAA";
-    private static final String UPDATED_FULL_NAME = "BBBBB";
+    private static final String DEFAULT_FULL_NAME = "AA";
+    private static final String UPDATED_FULL_NAME = "BB";
 
     @Inject
     private UserProfileRepository userProfileRepository;
@@ -94,6 +94,24 @@ public class UserProfileResourceIntTest {
         assertThat(userProfiles).hasSize(databaseSizeBeforeCreate + 1);
         UserProfile testUserProfile = userProfiles.get(userProfiles.size() - 1);
         assertThat(testUserProfile.getFullName()).isEqualTo(DEFAULT_FULL_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void checkFullNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = userProfileRepository.findAll().size();
+        // set the field null
+        userProfile.setFullName(null);
+
+        // Create the UserProfile, which fails.
+
+        restUserProfileMockMvc.perform(post("/api/userProfiles")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(userProfile)))
+            .andExpect(status().isBadRequest());
+
+        List<UserProfile> userProfiles = userProfileRepository.findAll();
+        assertThat(userProfiles).hasSize(databaseSizeBeforeTest);
     }
 
     @Test

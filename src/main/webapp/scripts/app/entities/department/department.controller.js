@@ -1,13 +1,32 @@
 'use strict';
 
 angular.module('adminPanelApp')
-    .controller('DepartmentController', function ($scope, $state, Department, DepartmentSearch) {
+    .controller('DepartmentController', function ($scope, $state, Department, DepartmentSearch, ParseLinks) {
 
         $scope.departments = [];
+        $scope.predicate = 'id';
+        $scope.reverse = true;
+        $scope.page = 0;
         $scope.loadAll = function () {
-            Department.query(function (result) {
-                $scope.departments = result;
+            Department.query({
+                page: $scope.page,
+                size: 20,
+                sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']
+            }, function (result, headers) {
+                $scope.links = ParseLinks.parse(headers('link'));
+                for (var i = 0; i < result.length; i++) {
+                    $scope.departments.push(result[i]);
+                }
             });
+        };
+        $scope.reset = function () {
+            $scope.page = 0;
+            $scope.departments = [];
+            $scope.loadAll();
+        };
+        $scope.loadPage = function (page) {
+            $scope.page = page;
+            $scope.loadAll();
         };
         $scope.loadAll();
 
@@ -23,7 +42,7 @@ angular.module('adminPanelApp')
         };
 
         $scope.refresh = function () {
-            $scope.loadAll();
+            $scope.reset();
             $scope.clear();
         };
 

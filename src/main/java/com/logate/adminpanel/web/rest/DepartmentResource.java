@@ -5,14 +5,19 @@ import com.logate.adminpanel.domain.Department;
 import com.logate.adminpanel.repository.DepartmentRepository;
 import com.logate.adminpanel.repository.search.DepartmentSearchRepository;
 import com.logate.adminpanel.web.rest.util.HeaderUtil;
+import com.logate.adminpanel.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -44,7 +49,7 @@ public class DepartmentResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Department> createDepartment(@RequestBody Department department) throws URISyntaxException {
+    public ResponseEntity<Department> createDepartment(@Valid @RequestBody Department department) throws URISyntaxException {
         log.debug("REST request to save Department : {}", department);
         if (department.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("department", "idexists", "A new department cannot already have an ID")).body(null);
@@ -63,7 +68,7 @@ public class DepartmentResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Department> updateDepartment(@RequestBody Department department) throws URISyntaxException {
+    public ResponseEntity<Department> updateDepartment(@Valid @RequestBody Department department) throws URISyntaxException {
         log.debug("REST request to update Department : {}", department);
         if (department.getId() == null) {
             return createDepartment(department);
@@ -82,9 +87,12 @@ public class DepartmentResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Department> getAllDepartments() {
-        log.debug("REST request to get all Departments");
-        return departmentRepository.findAll();
+    public ResponseEntity<List<Department>> getAllDepartments(Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of Departments");
+        Page<Department> page = departmentRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/departments");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**

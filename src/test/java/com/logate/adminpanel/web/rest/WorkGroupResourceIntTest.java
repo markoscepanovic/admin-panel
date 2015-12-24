@@ -41,8 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class WorkGroupResourceIntTest {
 
-    private static final String DEFAULT_NAME = "AAAAA";
-    private static final String UPDATED_NAME = "BBBBB";
+    private static final String DEFAULT_NAME = "AA";
+    private static final String UPDATED_NAME = "BB";
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
@@ -98,6 +98,24 @@ public class WorkGroupResourceIntTest {
         WorkGroup testWorkGroup = workGroups.get(workGroups.size() - 1);
         assertThat(testWorkGroup.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testWorkGroup.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = workGroupRepository.findAll().size();
+        // set the field null
+        workGroup.setName(null);
+
+        // Create the WorkGroup, which fails.
+
+        restWorkGroupMockMvc.perform(post("/api/workGroups")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(workGroup)))
+            .andExpect(status().isBadRequest());
+
+        List<WorkGroup> workGroups = workGroupRepository.findAll();
+        assertThat(workGroups).hasSize(databaseSizeBeforeTest);
     }
 
     @Test

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -44,7 +45,7 @@ public class WorkGroupResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<WorkGroup> createWorkGroup(@RequestBody WorkGroup workGroup) throws URISyntaxException {
+    public ResponseEntity<WorkGroup> createWorkGroup(@Valid @RequestBody WorkGroup workGroup) throws URISyntaxException {
         log.debug("REST request to save WorkGroup : {}", workGroup);
         if (workGroup.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("workGroup", "idexists", "A new workGroup cannot already have an ID")).body(null);
@@ -63,7 +64,7 @@ public class WorkGroupResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<WorkGroup> updateWorkGroup(@RequestBody WorkGroup workGroup) throws URISyntaxException {
+    public ResponseEntity<WorkGroup> updateWorkGroup(@Valid @RequestBody WorkGroup workGroup) throws URISyntaxException {
         log.debug("REST request to update WorkGroup : {}", workGroup);
         if (workGroup.getId() == null) {
             return createWorkGroup(workGroup);

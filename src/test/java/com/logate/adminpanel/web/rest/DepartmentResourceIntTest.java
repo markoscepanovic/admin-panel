@@ -41,8 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class DepartmentResourceIntTest {
 
-    private static final String DEFAULT_NAME = "AAAAA";
-    private static final String UPDATED_NAME = "BBBBB";
+    private static final String DEFAULT_NAME = "AA";
+    private static final String UPDATED_NAME = "BB";
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
@@ -98,6 +98,24 @@ public class DepartmentResourceIntTest {
         Department testDepartment = departments.get(departments.size() - 1);
         assertThat(testDepartment.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testDepartment.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = departmentRepository.findAll().size();
+        // set the field null
+        department.setName(null);
+
+        // Create the Department, which fails.
+
+        restDepartmentMockMvc.perform(post("/api/departments")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(department)))
+            .andExpect(status().isBadRequest());
+
+        List<Department> departments = departmentRepository.findAll();
+        assertThat(departments).hasSize(databaseSizeBeforeTest);
     }
 
     @Test

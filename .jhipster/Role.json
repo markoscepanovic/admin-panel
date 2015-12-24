@@ -13,7 +13,15 @@
         {
             "fieldId": 1,
             "fieldName": "name",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength"
+            ],
+            "fieldValidateRulesMinlength": "2",
+            "fieldValidateRulesMaxlength": "30",
+            "fieldValidateRulesPatternJava": "^[a-zA-Z0-9]*$"
         },
         {
             "fieldId": 2,

@@ -5,6 +5,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -23,7 +25,9 @@ public class UserProfile implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "full_name")
+    @NotNull
+    @Size(min = 2, max = 50)
+    @Column(name = "full_name", length = 50, nullable = false)
     private String fullName;
 
     @ManyToMany

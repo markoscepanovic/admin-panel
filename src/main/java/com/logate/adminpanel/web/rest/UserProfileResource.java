@@ -5,14 +5,19 @@ import com.logate.adminpanel.domain.UserProfile;
 import com.logate.adminpanel.repository.UserProfileRepository;
 import com.logate.adminpanel.repository.search.UserProfileSearchRepository;
 import com.logate.adminpanel.web.rest.util.HeaderUtil;
+import com.logate.adminpanel.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -44,7 +49,7 @@ public class UserProfileResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<UserProfile> createUserProfile(@RequestBody UserProfile userProfile) throws URISyntaxException {
+    public ResponseEntity<UserProfile> createUserProfile(@Valid @RequestBody UserProfile userProfile) throws URISyntaxException {
         log.debug("REST request to save UserProfile : {}", userProfile);
         if (userProfile.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userProfile", "idexists", "A new userProfile cannot already have an ID")).body(null);
@@ -63,7 +68,7 @@ public class UserProfileResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<UserProfile> updateUserProfile(@RequestBody UserProfile userProfile) throws URISyntaxException {
+    public ResponseEntity<UserProfile> updateUserProfile(@Valid @RequestBody UserProfile userProfile) throws URISyntaxException {
         log.debug("REST request to update UserProfile : {}", userProfile);
         if (userProfile.getId() == null) {
             return createUserProfile(userProfile);
@@ -82,9 +87,12 @@ public class UserProfileResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<UserProfile> getAllUserProfiles() {
-        log.debug("REST request to get all UserProfiles");
-        return userProfileRepository.findAllWithEagerRelationships();
+    public ResponseEntity<List<UserProfile>> getAllUserProfiles(Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of UserProfiles");
+        Page<UserProfile> page = userProfileRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/userProfiles");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**

@@ -20,7 +20,15 @@
         {
             "fieldId": 1,
             "fieldName": "name",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength"
+            ],
+            "fieldValidateRulesMinlength": "2",
+            "fieldValidateRulesMaxlength": "50",
+            "fieldValidateRulesPatternJava": "^[a-zA-Z0-9]*$"
         },
         {
             "fieldId": 2,
@@ -30,5 +38,5 @@
     ],
     "changelogDate": "20151224012942",
     "dto": "no",
-    "pagination": "no"
+    "pagination": "infinite-scroll"
 }

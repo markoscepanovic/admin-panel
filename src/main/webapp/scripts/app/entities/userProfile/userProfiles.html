@@ -26,37 +26,22 @@
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th><span translate="global.field.id">ID</span></th>
-                <th><span translate="adminPanelApp.userProfile.fullName">FullName</span></th>
-                <th><span translate="adminPanelApp.userProfile.role">role</span></th>
-                <th><span translate="adminPanelApp.userProfile.user">user</span></th>
-                <th><span translate="adminPanelApp.userProfile.workGroup">workGroup</span></th>
-                <th><span translate="adminPanelApp.userProfile.department">department</span></th>
+            <tr jh-sort="predicate" ascending="reverse" callback="reset()">
+                <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span
+                    class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="fullName"><span translate="adminPanelApp.userProfile.fullName">FullName</span> <span
+                    class="glyphicon glyphicon-sort"></span></th>
+                <th jh-sort-by="user.login"><span translate="adminPanelApp.userProfile.user">user</span> <span
+                    class="glyphicon glyphicon-sort"></span></th>
                 <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
             <tr ng-repeat="userProfile in userProfiles track by userProfile.id">
                 <td><a ui-sref="userProfile.detail({id:userProfile.id})">{{userProfile.id}}</a></td>
                 <td>{{userProfile.fullName}}</td>
                 <td>
-                        <span ng-repeat="role in userProfile.roles">
-                            <a class="form-control-static" ui-sref="role.detail({id: {{role.id}}})">{{role.name}}</a>{{$last ? '' : ', '}}
-                        </span>
-                </td>
-                <td>
                     {{userProfile.user.login}}
-                </td>
-                <td>
-                        <span ng-repeat="workGroup in userProfile.workGroups">
-                            <a class="form-control-static" ui-sref="workGroup.detail({id: {{workGroup.id}}})">{{workGroup.name}}</a>{{$last ? '' : ', '}}
-                        </span>
-                </td>
-                <td>
-                        <span ng-repeat="department in userProfile.departments">
-                            <a class="form-control-static" ui-sref="department.detail({id: {{department.id}}})">{{department.name}}</a>{{$last ? '' : ', '}}
-                        </span>
                 </td>
                 <td>
                     <button type="submit"

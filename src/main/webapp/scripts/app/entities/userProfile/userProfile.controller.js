@@ -1,13 +1,32 @@
 'use strict';
 
 angular.module('adminPanelApp')
-    .controller('UserProfileController', function ($scope, $state, UserProfile, UserProfileSearch) {
+    .controller('UserProfileController', function ($scope, $state, UserProfile, UserProfileSearch, ParseLinks) {
 
         $scope.userProfiles = [];
+        $scope.predicate = 'id';
+        $scope.reverse = true;
+        $scope.page = 0;
         $scope.loadAll = function () {
-            UserProfile.query(function (result) {
-                $scope.userProfiles = result;
+            UserProfile.query({
+                page: $scope.page,
+                size: 20,
+                sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']
+            }, function (result, headers) {
+                $scope.links = ParseLinks.parse(headers('link'));
+                for (var i = 0; i < result.length; i++) {
+                    $scope.userProfiles.push(result[i]);
+                }
             });
+        };
+        $scope.reset = function () {
+            $scope.page = 0;
+            $scope.userProfiles = [];
+            $scope.loadAll();
+        };
+        $scope.loadPage = function (page) {
+            $scope.page = page;
+            $scope.loadAll();
         };
         $scope.loadAll();
 
@@ -23,7 +42,7 @@ angular.module('adminPanelApp')
         };
 
         $scope.refresh = function () {
-            $scope.loadAll();
+            $scope.reset();
             $scope.clear();
         };
 

@@ -41,8 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class RoleResourceIntTest {
 
-    private static final String DEFAULT_NAME = "AAAAA";
-    private static final String UPDATED_NAME = "BBBBB";
+    private static final String DEFAULT_NAME = "AA";
+    private static final String UPDATED_NAME = "BB";
     private static final String DEFAULT_DESCRIPTION = "AAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBB";
 
@@ -98,6 +98,24 @@ public class RoleResourceIntTest {
         Role testRole = roles.get(roles.size() - 1);
         assertThat(testRole.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testRole.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+    }
+
+    @Test
+    @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = roleRepository.findAll().size();
+        // set the field null
+        role.setName(null);
+
+        // Create the Role, which fails.
+
+        restRoleMockMvc.perform(post("/api/roles")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(role)))
+            .andExpect(status().isBadRequest());
+
+        List<Role> roles = roleRepository.findAll();
+        assertThat(roles).hasSize(databaseSizeBeforeTest);
     }
 
     @Test

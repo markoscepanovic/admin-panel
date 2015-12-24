@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -44,7 +45,7 @@ public class RoleResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Role> createRole(@RequestBody Role role) throws URISyntaxException {
+    public ResponseEntity<Role> createRole(@Valid @RequestBody Role role) throws URISyntaxException {
         log.debug("REST request to save Role : {}", role);
         if (role.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("role", "idexists", "A new role cannot already have an ID")).body(null);
@@ -63,7 +64,7 @@ public class RoleResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Role> updateRole(@RequestBody Role role) throws URISyntaxException {
+    public ResponseEntity<Role> updateRole(@Valid @RequestBody Role role) throws URISyntaxException {
         log.debug("REST request to update Role : {}", role);
         if (role.getId() == null) {
             return createRole(role);
