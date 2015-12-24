@@ -1,0 +1,47 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "role",
+            "otherEntityName": "role",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "userProfile"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipName": "workGroup",
+            "otherEntityName": "workGroup",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipId": 4,
+            "relationshipName": "department",
+            "otherEntityName": "department",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "fullName",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20151224012942",
+    "dto": "no",
+    "pagination": "no"
+}

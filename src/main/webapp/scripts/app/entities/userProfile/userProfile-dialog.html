@@ -1,0 +1,58 @@
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserProfileLabel" translate="adminPanelApp.userProfile.home.createOrEditLabel">
+            Create or edit a UserProfile</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="userProfile.id" readonly/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="adminPanelApp.userProfile.fullName"
+                   for="field_fullName">FullName</label>
+            <input type="text" class="form-control" name="fullName" id="field_fullName"
+                   ng-model="userProfile.fullName"
+            />
+        </div>
+
+        <div class="form-group">
+            <label translate="adminPanelApp.userProfile.role" for="field_role">role</label>
+            <select class="form-control" id="field_role" multiple name="role" ng-model="userProfile.roles"
+                    ng-options="role as role.name for role in roles track by role.id"></select>
+        </div>
+        <div class="form-group">
+            <label translate="adminPanelApp.userProfile.user" for="field_user">user</label>
+            <select class="form-control" id="field_user" name="user" ng-model="userProfile.user"
+                    ng-options="user as user.login for user in users track by user.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="adminPanelApp.userProfile.workGroup" for="field_workGroup">workGroup</label>
+            <select class="form-control" id="field_workGroup" multiple name="workGroup"
+                    ng-model="userProfile.workGroups"
+                    ng-options="workGroup as workGroup.name for workGroup in workgroups track by workGroup.id"></select>
+        </div>
+        <div class="form-group">
+            <label translate="adminPanelApp.userProfile.department" for="field_department">department</label>
+            <select class="form-control" id="field_department" multiple name="department"
+                    ng-model="userProfile.departments"
+                    ng-options="department as department.name for department in departments track by department.id"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+            translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

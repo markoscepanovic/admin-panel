@@ -1,0 +1,46 @@
+<div>
+    <h2><span translate="adminPanelApp.department.detail.title">Department</span> {{department.name}}</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.department.name">Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{department.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.department.description">Description</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{department.description}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.department.parentDepartment">parentDepartment</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="department.detail({id:department.parentDepartment.id})">{{department.parentDepartment.name}}</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

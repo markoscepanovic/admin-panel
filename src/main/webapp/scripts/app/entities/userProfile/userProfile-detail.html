@@ -1,0 +1,68 @@
+<div>
+    <h2><span translate="adminPanelApp.userProfile.detail.title">UserProfile</span> {{userProfile.user.login}}</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.userProfile.fullName">FullName</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{userProfile.fullName}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.userProfile.role">role</span>
+                </td>
+                <td>
+                    <span ng-repeat="role in userProfile.roles">
+                        <a class="form-control-static" ui-sref="role.detail({id: {{role.id}}})">{{role.name}}</a>{{$last ? '' : ', '}}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.userProfile.user">user</span>
+                </td>
+                <td>
+                    {{userProfile.user.login}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.userProfile.workGroup">workGroup</span>
+                </td>
+                <td>
+                    <span ng-repeat="workGroup in userProfile.workGroups">
+                        <a class="form-control-static" ui-sref="workGroup.detail({id: {{workGroup.id}}})">{{workGroup.name}}</a>{{$last ? '' : ', '}}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.userProfile.department">department</span>
+                </td>
+                <td>
+                    <span ng-repeat="department in userProfile.departments">
+                        <a class="form-control-static" ui-sref="department.detail({id: {{department.id}}})">{{department.name}}</a>{{$last ? '' : ', '}}
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

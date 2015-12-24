@@ -1,0 +1,23 @@
+{
+    "adminPanelApp": {
+        "workGroup": {
+            "home": {
+                "title": "WorkGroups",
+                "createLabel": "Create a new WorkGroup",
+                "createOrEditLabel": "Create or edit a WorkGroup"
+            },
+            "created": "A new WorkGroup is created with identifier {{ param }}",
+            "updated": "A WorkGroup is updated with identifier {{ param }}",
+            "deleted": "A WorkGroup is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete WorkGroup {{ id }}?"
+            },
+            "detail": {
+                "title": "WorkGroup"
+            },
+            "name": "Name",
+            "description": "Description",
+            "user": "User"
+        }
+    }
+}
