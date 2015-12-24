@@ -114,6 +114,20 @@
                         </li>
                     </ul>
                 </li>
+                <li ui-sref-active="active" dropdown ng-controller="BootswatchController">
+                    <a dropdown-toggle href="">
+                        <span>
+                            <span class="glyphicon glyphicon-adjust"></span>
+                            <span class="hidden-tablet">Theme</span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="theme-link" ng-repeat="theme in themes">
+                            <a href="" jh-switch-theme="theme">{{theme.name}}</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
