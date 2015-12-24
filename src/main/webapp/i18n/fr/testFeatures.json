@@ -1,0 +1,25 @@
+{
+    "adminPanelApp": {
+        "testFeatures": {
+            "home": {
+                "title": "TestFeaturess",
+                "createLabel": "Créer un nouveau TestFeatures",
+                "createOrEditLabel": "Créer ou éditer un TestFeatures"
+            },
+            "created": "Un nouveau TestFeatures a été créé avec l'identifiant {{ param }}",
+            "updated": "Le TestFeatures avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le TestFeatures avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le TestFeatures {{ id }} ?"
+            },
+            "detail": {
+                "title": "TestFeatures"
+            },
+            "validationStringField": "ValidationStringField",
+            "validationRegExpField": "ValidationRegExpField",
+            "blobField": "BlobField",
+            "enumField": "EnumField"
+        }
+    }
+}
+

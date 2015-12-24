@@ -1,0 +1,73 @@
+<div>
+    <h2 translate="adminPanelApp.testFeatures.home.title">TestFeaturess</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="testFeatures.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span
+                    translate="adminPanelApp.testFeatures.home.createLabel">Create a new TestFeatures</span>
+                </button>
+            </div>
+            <div class="col-md-8">
+                <form name="searchForm" class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery"
+                               placeholder="query">
+                    </div>
+                    <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span>
+                        <span>Search a TestFeatures</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span translate="global.field.id">ID</span></th>
+                <th><span translate="adminPanelApp.testFeatures.validationStringField">ValidationStringField</span></th>
+                <th><span translate="adminPanelApp.testFeatures.validationRegExpField">ValidationRegExpField</span></th>
+                <th><span translate="adminPanelApp.testFeatures.blobField">BlobField</span></th>
+                <th><span translate="adminPanelApp.testFeatures.enumField">EnumField</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="testFeatures in testFeaturess track by testFeatures.id">
+                <td><a ui-sref="testFeatures.detail({id:testFeatures.id})">{{testFeatures.id}}</a></td>
+                <td>{{testFeatures.validationStringField}}</td>
+                <td>{{testFeatures.validationRegExpField}}</td>
+                <td>
+                    <img
+                        data-ng-src="{{'data:' + testFeatures.blobFieldContentType + ';base64,' + testFeatures.blobField}}"
+                        style="max-height: 30px;" ng-if="testFeatures.blobField"/> {{testFeatures.blobFieldContentType}}
+                    {{byteSize(testFeatures.blobField)}}
+                </td>
+                <td translate="{{'adminPanelApp.Satus.' + testFeatures.enumField}}">{{testFeatures.enumField}}</td>
+                <td>
+                    <button type="submit"
+                            ui-sref="testFeatures.detail({id:testFeatures.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="testFeatures.edit({id:testFeatures.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span
+                        translate="entity.action.edit"> Edit</span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="testFeatures.delete({id:testFeatures.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span
+                        translate="entity.action.delete"> Delete</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -20,8 +20,7 @@
                 "maxlength"
             ],
             "fieldValidateRulesMinlength": "2",
-            "fieldValidateRulesMaxlength": "30",
-            "fieldValidateRulesPatternJava": "^[a-zA-Z0-9]*$"
+            "fieldValidateRulesMaxlength": "30"
         },
         {
             "fieldId": 2,

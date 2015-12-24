@@ -1,0 +1,11 @@
+{
+    "adminPanelApp": {
+        "Satus": {
+            "null": "",
+            "open": "open",
+            "inProgress": "inProgress",
+            "finished": "finished",
+            "canceled": "canceled"
+        }
+    }
+}

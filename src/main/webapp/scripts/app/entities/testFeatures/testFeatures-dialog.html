@@ -1,0 +1,120 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myTestFeaturesLabel" translate="adminPanelApp.testFeatures.home.createOrEditLabel">
+            Create or edit a TestFeatures</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="testFeatures.id" readonly/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="adminPanelApp.testFeatures.validationStringField"
+                   for="field_validationStringField">ValidationStringField</label>
+            <input type="text" class="form-control" name="validationStringField" id="field_validationStringField"
+                   ng-model="testFeatures.validationStringField"
+                   required ng-minlength="2" ng-maxlength="10"/>
+
+            <div ng-show="editForm.validationStringField.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.validationStringField.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.validationStringField.$error.minlength" translate="entity.validation.minlength"
+                   translate-value-min="2">
+                    This field is required to be at least 2 characters.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.validationStringField.$error.maxlength" translate="entity.validation.maxlength"
+                   translate-value-max="10">
+                    This field cannot be longer than 10 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="adminPanelApp.testFeatures.validationRegExpField"
+                   for="field_validationRegExpField">ValidationRegExpField</label>
+            <input type="text" class="form-control" name="validationRegExpField" id="field_validationRegExpField"
+                   ng-model="testFeatures.validationRegExpField"
+                   ng-pattern="/^[a-zA-Z0-9]*$/"/>
+
+            <div ng-show="editForm.validationRegExpField.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.validationRegExpField.$error.pattern" translate="entity.validation.pattern"
+                   translate-value-pattern="^[a-zA-Z0-9]*$">
+                    This field should follow pattern "^[a-zA-Z0-9]*$".
+                </p>
+            </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="setBlobField($file, testFeatures)" ngf-pattern="'image/*'">
+            <label class="control-label" translate="adminPanelApp.testFeatures.blobField" for="field_blobField">BlobField</label>
+
+            <div>
+                <img data-ng-src="{{'data:' + testFeatures.blobFieldContentType + ';base64,' + testFeatures.blobField}}"
+                     style="max-height: 100px;" ng-if="testFeatures.blobField"/>
+
+                <div class="help-block clearfix">
+                    <span
+                        class="pull-left">{{testFeatures.blobFieldContentType}} {{byteSize(testFeatures.blobField)}}</span>
+                    <button ng-click="testFeatures.blobField=null;testFeatures.blobFieldContentType=null;"
+                            ng-if="testFeatures.blobField"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="file" ngf-select class="btn btn-default btn-block"
+                        ngf-change="setBlobField($file, testFeatures)" accept="image/*"
+                        translate="entity.action.addimage">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="blobField" id="field_blobField"
+                   ng-model="testFeatures.blobField"
+                   required/>
+            <input type="hidden" class="form-control" name="blobFieldContentType" id="field_blobFieldContentType"
+                   ng-model="testFeatures.blobFieldContentType"/>
+
+            <div ng-show="editForm.blobField.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.blobField.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="adminPanelApp.testFeatures.enumField" for="field_enumField">EnumField</label>
+            <select class="form-control" name="enumField" ng-model="testFeatures.enumField" id="field_enumField"
+                    required>
+                <option value="open" translate="adminPanelApp.Satus.open">open</option>
+                <option value="inProgress" translate="adminPanelApp.Satus.inProgress">inProgress</option>
+                <option value="finished" translate="adminPanelApp.Satus.finished">finished</option>
+                <option value="canceled" translate="adminPanelApp.Satus.canceled">canceled</option>
+            </select>
+
+            <div ng-show="editForm.enumField.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.enumField.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+            translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

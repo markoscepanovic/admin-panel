@@ -1,0 +1,58 @@
+<div>
+    <h2><span translate="adminPanelApp.testFeatures.detail.title">TestFeatures</span> {{testFeatures.id}}</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.testFeatures.validationStringField">ValidationStringField</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{testFeatures.validationStringField}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.testFeatures.validationRegExpField">ValidationRegExpField</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{testFeatures.validationRegExpField}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.testFeatures.blobField">BlobField</span>
+                </td>
+                <td>
+                    <img
+                        data-ng-src="{{'data:' + testFeatures.blobFieldContentType + ';base64,' + testFeatures.blobField}}"
+                        style="max-width: 100%;" ng-if="testFeatures.blobField"/>
+
+                    <div>{{testFeatures.blobFieldContentType}} {{byteSize(testFeatures.blobField)}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="adminPanelApp.testFeatures.enumField">EnumField</span>
+                </td>
+                <td>
+                    <span class="form-control-static" translate="{{'adminPanelApp.Satus.' + testFeatures.enumField}}">{{testFeatures.enumField}}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>
