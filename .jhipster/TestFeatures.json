@@ -44,5 +44,5 @@
     ],
     "changelogDate": "20151224092716",
     "dto": "no",
-    "pagination": "infinite-scroll"
+    "pagination": "no"
 }
